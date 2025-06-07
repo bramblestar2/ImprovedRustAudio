@@ -4,12 +4,11 @@ use rodio::{Decoder, OutputStreamHandle, Sink, Source};
 use tracing::error;
 
 #[derive(Clone)]
-struct PlayerSettings {
+pub struct PlayerSettings {
     volume: f32,
     start_time: f32,
     end_time: f32,
     looped: bool,
-
     fade_in: f32,
     fade_out: f32,
     speed: f32
@@ -95,7 +94,7 @@ impl PlayerSettings {
 }
 
 #[derive(Default, Clone)]
-struct PlayerInfo {
+pub struct PlayerInfo {
     file: String,
 }
 
@@ -126,6 +125,11 @@ impl Audio {
     // SETTINGS
     pub fn settings(&self) -> &PlayerSettings {
         &self.settings
+    }
+
+    pub fn set_settings(&mut self, settings: PlayerSettings) -> &mut Self {
+        self.settings = settings;
+        self
     }
 
     pub fn set_file(&mut self, file: &str)-> &mut Self {
@@ -164,6 +168,39 @@ impl Audio {
             Err(e) => {
                 error!("Error: {}", e);
             }
+        }
+    }
+}
+
+
+pub struct AudioBuilder {
+    settings: PlayerSettings,
+    info: PlayerInfo
+}
+
+impl AudioBuilder {
+    pub fn new() -> AudioBuilder {
+        AudioBuilder {
+            settings: PlayerSettings::default(),
+            info: PlayerInfo::default()
+        }
+    }
+
+    pub fn set_settings(&mut self, settings: PlayerSettings) -> &mut Self {
+        self.settings = settings;
+        self
+    }
+
+    pub fn set_info(&mut self, info: PlayerInfo)-> &mut Self {
+        self.info = info;
+        self
+    }
+
+    pub fn build(self, handle: &OutputStreamHandle) -> Audio {
+        Audio {
+            sink: Sink::try_new(handle).unwrap(),
+            settings: self.settings,
+            info: self.info
         }
     }
 }
