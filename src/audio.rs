@@ -1,9 +1,10 @@
 use std::{fmt::Debug, fs::File, io::BufReader, time::Duration};
 
 use rodio::{Decoder, OutputStreamHandle, Sink, Source};
+use serde::{Deserialize, Serialize};
 use tracing::error;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PlayerSettings {
     volume: f32,
     start_time: f32,
@@ -93,7 +94,7 @@ impl PlayerSettings {
     }
 }
 
-#[derive(Default, Clone, Debug)]
+#[derive(Default, Clone, Debug, Serialize, Deserialize)]
 pub struct PlayerInfo {
     file: String,
     settings: PlayerSettings
@@ -109,7 +110,9 @@ impl PlayerInfo {
     }
 }
 
+#[derive(Serialize)]
 pub struct Audio {
+    #[serde(skip)]
     sink: Sink,
     info: PlayerInfo
 }
@@ -135,6 +138,13 @@ impl Audio {
         Audio {
             sink: Sink::try_new(handle).unwrap(),
             info: self.info.clone()
+        }
+    }
+
+    pub fn from_info(info: PlayerInfo, handle: &OutputStreamHandle) -> Audio {
+        Audio {
+            sink: Sink::try_new(handle).unwrap(),
+            info
         }
     }
 
