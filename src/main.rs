@@ -1,3 +1,5 @@
+use crate::manager::PlayerManager;
+
 mod api;
 mod engine;
 mod audio;
@@ -21,9 +23,15 @@ fn main() {
 
     std::io::stdin().read_line(&mut String::new()).unwrap();
 
+    engine.manager().save("/home/jay/Desktop/TestingAudio/test.json");
+
     engine.remove(id);
 
     for (i, audio) in engine.list().iter() {
         println!("{}: {:?}", i, audio);
     }
+
+    engine.load("/home/jay/Desktop/TestingAudio/test.json");
+
+    println!("(ENGINE) {}", engine.json());
 }

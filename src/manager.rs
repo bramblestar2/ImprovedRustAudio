@@ -1,6 +1,17 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::File};
 
-use crate::{audio::Audio, utils::IdPool};
+use rodio::OutputStreamHandle;
+use serde::{Deserialize, Serialize};
+use serde_json::json;
+use tracing::error;
+
+use crate::{audio::{Audio, PlayerInfo}, utils::IdPool};
+
+#[derive(Serialize, Deserialize)]
+struct PlayerEntry {
+    id: u32,
+    info: PlayerInfo
+}
 
 #[derive(Default)]
 pub struct PlayerManager {
@@ -14,6 +25,60 @@ impl PlayerManager {
             id_pool: IdPool::new(),
             players: HashMap::new()
         }
+    }
+
+    pub fn json(&self) -> String {
+        let entries: Vec<PlayerEntry> = self.players
+            .iter()
+            .map(
+                |(id, audio)| PlayerEntry {
+                    id: *id,
+                    info: audio.info().clone()
+                }
+            )
+            .collect();
+
+        serde_json::to_string(&entries).unwrap()
+    }
+
+    pub fn save(&mut self, filepath: &str) {
+        if let Ok(file) = File::create(filepath) {
+            let entries: Vec<PlayerEntry> = self.players
+                .iter()
+                .map(
+                    |(id, audio)| PlayerEntry {
+                        id: *id,
+                        info: audio.info().clone()
+                    }
+                )
+                .collect();
+
+            serde_json::to_writer_pretty(file, &entries).unwrap();
+        }
+    }
+
+    pub fn load(filepath: &str, handle: &OutputStreamHandle) -> PlayerManager {
+        let mut manager = PlayerManager::default();
+
+        if let Ok(file) = File::open(filepath) {
+            let entries: Vec<PlayerEntry> = serde_json::from_reader(file).expect("Failed to deserialize AudioInfo JSON");
+
+            for entry in entries {
+                match Audio::from_info(entry.info, &handle) {
+                    Ok(audio) => {
+                        manager.players.insert(entry.id, audio);
+                        manager.id_pool.reserve(entry.id);
+                    },
+                    Err(e) => {
+                        error!("Failed to load Audio {}: {:?}", entry.id, e);
+                    }
+                }
+            }
+        } else {
+            error!("Could not open '{}', starting with empty manager", filepath);
+        }
+
+        manager
     }
 
     pub fn get_player(&self, id: u32) -> Option<&Audio> {

@@ -141,11 +141,11 @@ impl Audio {
         }
     }
 
-    pub fn from_info(info: PlayerInfo, handle: &OutputStreamHandle) -> Audio {
-        Audio {
+    pub fn from_info(info: PlayerInfo, handle: &OutputStreamHandle) -> Result<Audio, ()> {
+        Ok(Audio {
             sink: Sink::try_new(handle).unwrap(),
             info
-        }
+        })
     }
 
 

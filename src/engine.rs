@@ -23,6 +23,18 @@ impl Engine {
         }
     }
 
+    pub fn json(&self) -> String {
+        self.player.json()
+    }
+
+    pub fn load(&mut self, filepath: &str) {
+        self.player = PlayerManager::load(filepath, &self._handle);
+    }
+
+    pub fn save(&mut self, filepath: &str) {
+        self.player.save(filepath);
+    }
+
     pub fn get_handle(&self) -> Arc<OutputStreamHandle> {
         self._handle.clone()
     }
