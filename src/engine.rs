@@ -2,7 +2,7 @@ use std::{collections::HashMap, sync::Arc};
 
 use rodio::{OutputStream, OutputStreamHandle};
 
-use crate::{audio::{Audio, AudioBuilder}, manager::PlayerManager, utils::IdPool};
+use crate::{audio::{Audio, AudioBuilder}, manager::{PlayerEntry, PlayerManager}, utils::IdPool};
 
 
 
@@ -64,11 +64,25 @@ impl Engine {
         self.player.clear();
     }
 
-    pub fn list(&self) -> Vec<(u32, &Audio)> {
+    pub fn list(&self) -> Vec<PlayerEntry> {
         self.player.list()
     }
 
     pub fn manager(&mut self) -> &mut PlayerManager {
         &mut self.player
+    }
+
+
+
+    pub fn play(&mut self, id: u32) {
+        self.player.play(id);
+    }
+
+    pub fn stop(&mut self, id: u32) {
+        self.player.stop(id);
+    }
+
+    pub fn pause(&mut self, id: u32) {
+        self.player.pause(id);
     }
 }

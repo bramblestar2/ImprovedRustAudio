@@ -7,10 +7,10 @@ use tracing::error;
 
 use crate::{audio::{Audio, PlayerInfo}, utils::IdPool};
 
-#[derive(Serialize, Deserialize)]
-struct PlayerEntry {
-    id: u32,
-    info: PlayerInfo
+#[derive(Serialize, Deserialize, Debug)]
+pub struct PlayerEntry {
+    pub id: u32,
+    pub info: PlayerInfo
 }
 
 #[derive(Default)]
@@ -107,8 +107,16 @@ impl PlayerManager {
         self.id_pool = IdPool::new();
     }
 
-    pub fn list(&self) -> Vec<(u32, &Audio)> {
-        self.players.iter().map(|(id, audio)| (*id, audio)).collect()
+    pub fn list(&self) -> Vec<PlayerEntry> {
+        self.players
+            .iter()
+            .map(
+                |(id, audio)| PlayerEntry {
+                    id: *id,
+                    info: audio.info().clone()
+                }
+            )
+            .collect()
     }
 
     pub fn play(&mut self, id: u32) {

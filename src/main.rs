@@ -17,8 +17,8 @@ fn main() {
     let id = engine.create(builder);
     engine.manager().play(id);
 
-    for (i, audio) in engine.list().iter() {
-        println!("{}: {:?}", i, audio);
+    for entry in engine.list().iter() {
+        println!("{:?}", entry);
     }
 
     std::io::stdin().read_line(&mut String::new()).unwrap();
@@ -27,11 +27,11 @@ fn main() {
 
     engine.remove(id);
 
-    for (i, audio) in engine.list().iter() {
-        println!("{}: {:?}", i, audio);
+    for entry in engine.list().iter() {
+        println!("{:?}", entry);
     }
 
     engine.load("/home/jay/Desktop/TestingAudio/test.json");
-
+    
     println!("(ENGINE) {}", engine.json());
 }
