@@ -25,8 +25,8 @@ AudioBuilder AudioEngine::builder() {
     return AudioBuilder();
 }
 
-uint32_t AudioEngine::create(AudioBuilder builder) {
-    return rust_audio::create(*engine, builder.get());
+uint32_t AudioEngine::create(AudioBuilder& builder) {
+    return rust_audio::create(*engine, *builder);
 }
 
 void AudioEngine::remove(uint32_t id) {

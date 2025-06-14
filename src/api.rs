@@ -35,6 +35,14 @@ pub mod FFIAudio {
     }
 
     extern "Rust" {
+        fn json(self: &PlayerManager) -> String;
+        fn list(self: &PlayerManager) -> Vec<PlayerEntry>;
+        fn play(self: &mut PlayerManager, id: u32);
+        fn stop(self: &mut PlayerManager, id: u32);
+        fn pause(self: &mut PlayerManager, id: u32);
+    }
+
+    extern "Rust" {
         fn set_file(self: &mut AudioBuilder, file: &str);
         fn set_loop(self: &mut AudioBuilder, loop_: bool);
         fn set_speed(self: &mut AudioBuilder, speed: f32);

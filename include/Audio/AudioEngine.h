@@ -16,7 +16,7 @@ public:
 
     AudioBuilder builder();
 
-    uint32_t create(AudioBuilder builder);
+    uint32_t create(AudioBuilder& builder);
     void remove(uint32_t id);
     void clear();
     std::vector<PlayerEntry> list();

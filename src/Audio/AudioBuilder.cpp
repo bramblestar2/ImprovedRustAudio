@@ -57,7 +57,7 @@ AudioBuilder &AudioBuilder::set_end(float end)
     return *this;
 }
 
-rust::cxxbridge1::Box<rust_audio::AudioBuilder> AudioBuilder::get() 
-{
-    return std::move(builder);
+rust::cxxbridge1::Box<rust_audio::AudioBuilder> AudioBuilder::operator*() 
+{ 
+    return std::move(builder); 
 }

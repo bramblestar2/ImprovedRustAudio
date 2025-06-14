@@ -18,10 +18,7 @@ public:
     AudioBuilder& set_start(float start);
     AudioBuilder& set_end(float end);
 
-
-
-    rust::cxxbridge1::Box<rust_audio::AudioBuilder> get();
-
+    rust::cxxbridge1::Box<rust_audio::AudioBuilder> operator*();
 private:
     rust::cxxbridge1::Box<rust_audio::AudioBuilder> builder;
 };

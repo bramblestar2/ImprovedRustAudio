@@ -1,6 +1,8 @@
 #include <iostream>
 #include "../include/Audio/AudioBuilder.h"
 
+#include "../include/Audio/AudioEngine.h"
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
@@ -14,7 +16,8 @@ int main() {
     builder.set_end(20.0);
     builder.set_start(10.0);
     
+    AudioEngine engine;
+    engine.create(builder);
     
-
     return 0;
 }
