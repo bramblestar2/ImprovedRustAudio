@@ -1,3 +1,4 @@
 /target
 /include/rust/
 /build
+/.vscode

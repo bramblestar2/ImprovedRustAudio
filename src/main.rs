@@ -12,7 +12,12 @@ fn main() {
 
     let mut engine = engine::Engine::new();
 
-    let builder = engine.builder().set_file(file).set_fade_in(5.0).set_fade_out(10.0).set_end(20.0).set_start(10.0);
+    let mut builder = engine.builder();
+    builder.set_file(file);
+    builder.set_fade_in(5.0);
+    builder.set_fade_out(10.0);
+    builder.set_end(20.0);
+    builder.set_start(10.0);
 
     let id = engine.create(builder);
     engine.manager().play(id);

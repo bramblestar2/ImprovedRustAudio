@@ -110,6 +110,7 @@ impl PlayerInfo {
     }
 }
 
+
 #[derive(Serialize)]
 pub struct Audio {
     #[serde(skip)]
@@ -242,54 +243,44 @@ impl AudioBuilder {
         }
     }
 
-    pub fn set_file(mut self, file: &str)-> Self {
+    pub fn set_file(&mut self, file: &str) {
         self.info.file = file.to_string();
-        self
     }
 
-    pub fn set_loop(mut self, looped: bool) -> Self {
+    pub fn set_loop(&mut self, looped: bool) {
         self.info.settings.set_loop(looped);
-        self
     }
 
-    pub fn set_speed(mut self, speed: f32) -> Self {
+    pub fn set_speed(&mut self, speed: f32) {
         self.info.settings.set_speed(speed);
-        self
     }
 
-    pub fn set_volume(mut self, volume: f32) -> Self {
+    pub fn set_volume(&mut self, volume: f32)  {
         self.info.settings.set_volume(volume);
-        self
     }
 
-    pub fn set_fade_in(mut self, fade_in: f32)-> Self {
+    pub fn set_fade_in(&mut self, fade_in: f32) {
         self.info.settings.set_fade_in(fade_in);
-        self
     }
 
-    pub fn set_fade_out(mut self, fade_out: f32)-> Self {
+    pub fn set_fade_out(&mut self, fade_out: f32) {
         self.info.settings.set_fade_out(fade_out);
-        self
     }
 
-    pub fn set_start(mut self, start_time: f32)-> Self {
+    pub fn set_start(&mut self, start_time: f32) {
         self.info.settings.set_start(start_time);
-        self
     }
 
-    pub fn set_end(mut self, end_time: f32)-> Self {
+    pub fn set_end(&mut self, end_time: f32) {
         self.info.settings.set_end(end_time);
-        self
     }
 
-    pub fn set_settings(mut self, settings: PlayerSettings)-> Self {
+    pub fn set_settings(&mut self, settings: PlayerSettings) {
         self.info.settings = settings;
-        self
     }
 
-    pub fn set_info(mut self, info: PlayerInfo)-> Self {
+    pub fn set_info(&mut self, info: PlayerInfo) {
         self.info = info;
-        self
     }
 
     pub fn build(self, handle: &OutputStreamHandle) -> Audio {

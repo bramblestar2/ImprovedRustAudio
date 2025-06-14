@@ -5,7 +5,7 @@ fn main() {
 
     cxx_build::bridge("src/api.rs")
         .flag_if_supported("-std=c++23")
-        .compile("audio");
+        .compile("improved_rust_audio");
 
     let cxx_path = Path::new("target/cxxbridge/rust/cxx.h");
     let api_h_path = Path::new("target/cxxbridge/improved_rust_audio/src/api.rs.h");

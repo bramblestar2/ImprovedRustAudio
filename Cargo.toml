@@ -16,4 +16,4 @@ cxx-build = "1.0"
 
 [lib]
 name = "improved_rust_audio"
-crate-type = ["cdylib"]
+crate-type = ["staticlib"]

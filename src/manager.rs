@@ -13,6 +13,16 @@ pub struct PlayerEntry {
     pub info: PlayerInfo
 }
 
+impl PlayerEntry {
+    pub fn id(&self) -> u32 {
+        self.id
+    }
+
+    pub fn info(&self) -> &PlayerInfo {
+        &self.info
+    }
+}
+
 #[derive(Default)]
 pub struct PlayerManager {
     id_pool: IdPool,
