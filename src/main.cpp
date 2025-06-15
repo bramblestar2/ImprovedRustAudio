@@ -11,13 +11,15 @@ int main() {
     builder.set_file("/home/jay/Downloads/C418 - The Fighter.mp3");
     builder.set_loop(true);
     builder.set_volume(0.5);
-    builder.set_fade_in(5.0);
-    builder.set_fade_out(10.0);
     builder.set_end(20.0);
     builder.set_start(10.0);
     
     AudioEngine engine;
-    engine.create(builder);
+    int id = engine.create(builder);
+
+    engine.play(id);
+
+    std::cin.get();
     
     return 0;
 }
