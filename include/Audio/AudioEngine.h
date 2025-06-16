@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <functional>
+#include <nlohmann/json.hpp>
 
 #include "rust/audio.h"
 #include "types.h"
@@ -25,6 +27,9 @@ public:
     void stop(uint32_t id);
     void pause(uint32_t id);
 
+    void onAudioListChanged(std::function<void()> callback);
+
 private:
     rust::cxxbridge1::Box<rust_audio::Engine> engine;
+    std::function<void()> onAudioListChangedCallback;
 };

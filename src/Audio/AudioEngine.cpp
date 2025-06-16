@@ -63,3 +63,7 @@ void AudioEngine::stop(uint32_t id) {
 void AudioEngine::pause(uint32_t id) {
     engine->pause(id);
 }
+
+void AudioEngine::onAudioListChanged(std::function<void()> callback) {
+    onAudioListChangedCallback = callback;
+}

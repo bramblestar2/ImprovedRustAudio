@@ -18,6 +18,8 @@ if (UNIX AND NOT APPLE)
     pkg_check_modules(ALSA REQUIRED alsa)
 endif()
 
+find_package(nlohmann_json CONFIG REQUIRED)
+
 add_custom_target(build_rust_audio
     COMMAND cargo build ${CARGO_BUILD_FLAGS} --manifest-path ${CMAKE_CURRENT_SOURCE_DIR}/Cargo.toml
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -40,8 +42,8 @@ set_target_properties(rust_audio PROPERTIES
 )
 add_dependencies(rust_audio build_rust_audio)
 
-add_executable(improved_rust_audio
-    src/main.cpp
+add_library(improved_rust_audio
+    # src/main.cpp
     src/Audio/Audio.cpp
     src/Audio/AudioEngine.cpp
     src/Audio/AudioBuilder.cpp
@@ -54,6 +56,7 @@ target_include_directories(improved_rust_audio PUBLIC
 )
 target_link_libraries(improved_rust_audio PUBLIC 
     rust_audio
+    nlohmann_json::nlohmann_json
     ${CMAKE_DL_LIBS}
     ${ALSA_LIBRARIES}
 )
