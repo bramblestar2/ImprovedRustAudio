@@ -17,7 +17,25 @@ void AudioEngine::load(std::string filepath) {
     engine->load(filepath);
 }
 
-void AudioEngine::save(std::string filepath) {
+void AudioEngine::load(std::map<int, PlayerEntry> data)
+{
+    for (auto& [id, entry] : data) {
+        AudioBuilder builder = AudioBuilder();
+        builder.set_file(entry.info.file);
+        builder.set_start(entry.info.settings.start_time);
+        builder.set_end(entry.info.settings.end_time);
+        builder.set_loop(entry.info.settings.looped);
+        builder.set_speed(entry.info.settings.speed);
+        builder.set_volume(entry.info.settings.volume);
+        builder.set_fade_in(entry.info.settings.fade_in);
+        builder.set_fade_out(entry.info.settings.fade_out);
+
+        rust_audio::create_reserved(*engine, id, *builder);
+    }
+}
+
+void AudioEngine::save(std::string filepath)
+{
     engine->save(filepath);
 }
 

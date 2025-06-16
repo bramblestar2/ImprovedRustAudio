@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include <functional>
 #include <nlohmann/json.hpp>
 
@@ -8,12 +9,14 @@
 #include "types.h"
 #include "AudioBuilder.h"
 
+
 class AudioEngine {
 public:
     AudioEngine();
 
     std::string json();
     void load(std::string filepath);
+    void load(std::map<int, PlayerEntry> data);
     void save(std::string filepath);
 
     AudioBuilder builder();

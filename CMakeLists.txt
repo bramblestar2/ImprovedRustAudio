@@ -35,7 +35,7 @@ if (NOT RUST_AUDIO_LIB)
     message(FATAL_ERROR "Could not find improved_rust_audio library")
 endif()
 
-add_library(rust_audio STATIC IMPORTED)
+add_library(rust_audio STATIC IMPORTED GLOBAL)
 set_target_properties(rust_audio PROPERTIES
     IMPORTED_LOCATION ${RUST_AUDIO_LIB}
     IMPORTED_IMPLIB ${RUST_AUDIO_LIB}

@@ -90,13 +90,19 @@ impl PlayerManager {
 
         manager
     }
-
+    
     pub fn get_player(&self, id: u32) -> Option<&Audio> {
         self.players.get(&id)
     }
 
     pub fn get_player_mut(&mut self, id: u32) -> Option<&mut Audio> {
         self.players.get_mut(&id)
+    }
+
+    pub fn add_reserved(&mut self, id: u32, audio: Audio) -> u32 {
+        self.id_pool.reserve(id);
+        self.players.insert(id, audio);
+        id
     }
 
     pub fn add(&mut self, audio: Audio) -> u32 {

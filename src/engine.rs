@@ -56,6 +56,11 @@ impl Engine {
         id
     }
 
+    pub fn create_reserved(&mut self, id: u32, builder: AudioBuilder) -> u32 {
+        let id = self.player.add_reserved(id, builder.build(&self._handle));
+        id
+    }
+
     pub fn remove(&mut self, id: u32) {
         self.player.remove(id);
     }

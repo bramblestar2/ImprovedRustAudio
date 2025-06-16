@@ -25,6 +25,7 @@ pub mod FFIAudio {
 
         fn builder(engine: &mut Engine) -> Box<AudioBuilder>;
         fn create(engine: &mut Engine, builder: Box<AudioBuilder>) -> u32;
+        fn create_reserved(engine: &mut Engine, id: u32, builder: Box<AudioBuilder>) -> u32;
         fn remove(self: &mut Engine, id: u32);
         fn clear(self: &mut Engine);
         fn list(self: &Engine) -> Vec<PlayerEntry>;
@@ -97,4 +98,8 @@ fn create(engine: &mut Engine, builder: Box<AudioBuilder>) -> u32 {
 
 fn create_builder() -> Box<AudioBuilder> {
     Box::new(AudioBuilder::new())
+}
+
+fn create_reserved(engine: &mut Engine, id: u32, builder: Box<AudioBuilder>) -> u32 {
+    engine.create_reserved(id, *builder)
 }
