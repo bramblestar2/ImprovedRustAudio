@@ -243,6 +243,12 @@ impl AudioBuilder {
         }
     }
 
+    pub fn clone(&self) -> Box<AudioBuilder> {
+        Box::new(AudioBuilder {
+            info: self.info.clone()
+        })
+    }
+
     pub fn set_file(&mut self, file: &str) {
         self.info.file = file.to_string();
     }

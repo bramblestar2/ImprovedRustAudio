@@ -44,6 +44,7 @@ pub mod FFIAudio {
     }
 
     extern "Rust" {
+        fn clone(self: &AudioBuilder) -> Box<AudioBuilder>;
         fn set_file(self: &mut AudioBuilder, file: &str);
         fn set_loop(self: &mut AudioBuilder, loop_: bool);
         fn set_speed(self: &mut AudioBuilder, speed: f32);

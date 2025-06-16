@@ -59,5 +59,11 @@ AudioBuilder &AudioBuilder::set_end(float end)
 
 rust::cxxbridge1::Box<rust_audio::AudioBuilder> AudioBuilder::operator*() 
 { 
-    return std::move(builder); 
+    return std::move(builder);
+}
+
+AudioBuilder &AudioBuilder::operator=(const AudioBuilder &other)
+{
+    this->builder = other.builder->clone();
+    return *this;
 }
