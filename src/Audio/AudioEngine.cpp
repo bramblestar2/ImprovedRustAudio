@@ -1,6 +1,7 @@
 #include "Audio/AudioEngine.h"
 
 #include <algorithm>
+#include <spdlog/spdlog.h>
 
 AudioEngine::AudioEngine()
     : engine(rust_audio::new_engine())
@@ -17,8 +18,9 @@ void AudioEngine::load(std::string filepath) {
     engine->load(filepath);
 }
 
-void AudioEngine::load(std::map<int, AudioBuilder> data)
+void AudioEngine::load(std::map<int, AudioBuilder>& data)
 {
+    engine->clear();
     for (auto& [id, builder] : data) {
         rust_audio::create_reserved(*engine, id, *builder);
     }
