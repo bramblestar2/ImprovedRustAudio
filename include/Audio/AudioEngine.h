@@ -16,7 +16,7 @@ public:
 
     std::string json();
     void load(std::string filepath);
-    void load(std::map<int, PlayerEntry> data);
+    void load(std::map<int, AudioBuilder> data);
     void save(std::string filepath);
 
     AudioBuilder builder();
