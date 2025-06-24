@@ -177,6 +177,10 @@ impl Audio {
         self.sink.pause();
     }
 
+    pub fn position(&self) -> f32 {
+        self.sink.get_pos().as_secs_f32()
+    }
+
     pub fn play(&mut self) {
         self.stop();
 

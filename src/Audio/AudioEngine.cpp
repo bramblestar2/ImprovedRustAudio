@@ -62,6 +62,10 @@ rust_audio::PlayerManager& AudioEngine::manager() {
     return engine->manager();
 }
 
+float AudioEngine::position(uint32_t id) {
+    return engine->position(id);
+}
+
 void AudioEngine::play(uint32_t id) {
     engine->play(id);
 }

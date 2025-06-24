@@ -33,6 +33,7 @@ pub mod FFIAudio {
         fn play(self: &mut Engine, id: u32);
         fn stop(self: &mut Engine, id: u32);
         fn pause(self: &mut Engine, id: u32);
+        fn position(self: &Engine, id: u32) -> f32;
     }
 
     extern "Rust" {

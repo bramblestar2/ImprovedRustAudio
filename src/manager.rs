@@ -123,6 +123,14 @@ impl PlayerManager {
         self.id_pool = IdPool::new();
     }
 
+    pub fn position(&self, id: u32) -> f32 {
+        if let Some(audio) = self.players.get(&id) {
+            audio.position()
+        } else {
+            -1.0
+        }
+    }
+
     pub fn list(&self) -> Vec<PlayerEntry> {
         self.players
             .iter()

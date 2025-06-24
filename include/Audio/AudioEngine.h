@@ -26,6 +26,7 @@ public:
     void clear();
     std::vector<PlayerEntry> list();
     rust_audio::PlayerManager& manager();
+    float position(uint32_t id);
     void play(uint32_t id);
     void stop(uint32_t id);
     void pause(uint32_t id);

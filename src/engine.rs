@@ -90,4 +90,8 @@ impl Engine {
     pub fn pause(&mut self, id: u32) {
         self.player.pause(id);
     }
+
+    pub fn position(&self, id: u32) -> f32 {
+        self.player.position(id)
+    }
 }
