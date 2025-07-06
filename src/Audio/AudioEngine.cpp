@@ -25,7 +25,10 @@ void AudioEngine::load(std::map<int, AudioBuilder>& data)
     for (auto& [id, builder] : data) {
         rust_audio::create_reserved(*engine, id, *builder);
     }
-    this->onAudioListChangedCallback();
+
+    if (onAudioListChangedCallback) {
+        this->onAudioListChangedCallback();
+    }
 }
 
 void AudioEngine::save(std::string filepath)
@@ -39,18 +42,27 @@ AudioBuilder AudioEngine::builder() {
 
 uint32_t AudioEngine::create(AudioBuilder& builder) {
     int id = rust_audio::create(*engine, *builder);
-    this->onAudioListChangedCallback();
+
+    if (onAudioListChangedCallback) {
+        this->onAudioListChangedCallback();
+    }
     return id;
 }
 
 void AudioEngine::remove(uint32_t id) {
     engine->remove(id);
-    this->onAudioListChangedCallback();
+
+    if (onAudioListChangedCallback) {
+        this->onAudioListChangedCallback();
+    }
 }
 
 void AudioEngine::clear() {
     engine->clear();
-    this->onAudioListChangedCallback();
+    
+    if (onAudioListChangedCallback) {
+        this->onAudioListChangedCallback();
+    }
 }
 
 std::vector<PlayerEntry> AudioEngine::list() {
