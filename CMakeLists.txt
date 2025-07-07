@@ -31,6 +31,17 @@ find_library(RUST_AUDIO_LIB
     NAMES improved_rust_audio
     PATHS ${CMAKE_CURRENT_SOURCE_DIR}/target/${CARGO_LIB_PATH}
 )
+
+execute_process(
+    COMMAND cargo build ${CARGO_BUILD_FLAGS} --manifest-path ${CMAKE_CURRENT_SOURCE_DIR}/Cargo.toml
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    RESULT_VARIABLE _cargo_result
+)
+
+if (NOT _cargo_result EQUAL 0)
+    message(FATAL_ERROR "Could not build improved_rust_audio library (exit code: ${_cargo_result})")
+endif()
+
 if (NOT RUST_AUDIO_LIB)
     message(FATAL_ERROR "Could not find improved_rust_audio library")
 endif()
